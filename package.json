@@ -1,0 +1,18 @@
+{
+  "name": "news-cli",
+  "version": "1.0.0",
+  "description": "News in your CLI",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bjarne Oeverli",
+  "license": "MIT",
+  "dependencies": {
+    "array-spread": "^1.0.2",
+    "chalk": "^1.1.1",
+    "memory-cache": "^0.1.4",
+    "request": "^2.69.0",
+    "xml2js": "^0.4.16"
+  }
+}
