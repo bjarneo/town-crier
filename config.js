@@ -1,4 +1,22 @@
+/*
+const argv = require('argv');
+
+argv.option([
+    {
+        name: 'interval',
+        short: 'i',
+        description: 'Poll interval in seconds',
+        type: 'int',
+        example: 'oyez --interval=60 or oyez -i 60'
+    }
+]);
+
+argv.run();
+
+console.log(argv);
+*/
 module.exports = {
+    interval: 60 * 1000, // 60 seconds
     sources: [
         'http://www.dagbladet.no/rss/nyheter/',
         'http://www.aftenposten.no/rss/',
