@@ -4,9 +4,6 @@ const cache = require('memory-cache');
 const stripTags = require('striptags');
 
 function createItemObject(item, channel) {
-
-
-
     return {
         provider: channel.title,
         title: stripTags(item.title.toString()),
