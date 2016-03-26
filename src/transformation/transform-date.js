@@ -6,20 +6,21 @@ const config = require('../../config');
 module.exports = function transformDate(date) {
     date = new Date(date);
 
-    var dateFormat;
-    if (config.dateFormat === 'mm-dd-yyyy') {
-        dateFormat = zeroPad(date.getMonth()) +
-            '-' + zeroPad(date.getDate()) +
-            '-' + date.getFullYear();
-    } else if (config.dateFormat === 'yyyy-mm-dd') {
-        dateFormat = date.getFullYear() +
-            '-' + zeroPad(date.getMonth()) +
-            '-' + zeroPad(date.getDate());
-    } else {
-        dateFormat = zeroPad(date.getDate()) +
-            '-' + zeroPad(date.getMonth()) +
-            '-' + date.getFullYear();
-    }
+    var dateFormat = '';
+
+    var format = {
+        mm: zeroPad(date.getMonth()),
+        dd: zeroPad(date.getDate()),
+        yyyy: date.getFullYear()
+    };
+
+    config.dateFormat.split('-').forEach((f, i, a) => {
+        dateFormat += format[f];
+
+        if (i !== (a.length - 1)) {
+            dateFormat += '-';
+        }
+    });
 
     return dateFormat +
         ' ' + zeroPad(date.getHours() + 1) +
