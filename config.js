@@ -1,29 +1,43 @@
-/*
-const argv = require('argv');
+'use strict';
 
-argv.option([
-    {
-        name: 'interval',
-        short: 'i',
-        description: 'Poll interval in seconds',
-        type: 'int',
-        example: 'oyez --interval=60 or oyez -i 60'
-    }
-]);
+const meow = require('meow');
+const argv = require('minimist')(process.argv.slice(2));
 
-argv.run();
+if (argv.help) {
+    meow(`
+        Usage
+          $ town-crier <input>
 
-console.log(argv);
-*/
-module.exports = {
-    interval: 60 * 1000, // 60 seconds,
-    dateFormat: 'dd-mm-yyyy', // mm-dd-yyyy
-    sources: [
-        'http://www.dagbladet.no/rss/nyheter/',
-        'http://www.aftenposten.no/rss/',
-        'http://www.vg.no/rss/feed/?categories=1068&keywords=&limit=10&format=rss',
-        'http://rss.nytimes.com/services/xml/rss/nyt/InternationalHome.xml',
-        'http://feeds.reuters.com/reuters/topNews',
-        'http://www.nasa.gov/rss/image_of_the_day.rss'
-    ]
+        Options
+             ,  --help           Help
+          -i ,  --interval       interval in seconds
+          -dF,  --dateFormat     how you'd like your date format
+          -s ,  --sources        comma separated list of rss sources
+
+        Examples
+          $ town-crier --interval 60
+          $ town-crier --dateFormat mm-dd-yyyy
+          $ town-crier --sources=http://www.vg.no/rss/feed/,http://www.aftenposten.no/rss/
+    `);
+
+    process.exit(-1);
 }
+
+const config = {
+    interval: ((argv.interval || argv.i) || 60) * 1000, // 60 seconds,
+    dateFormat: (argv.dateFormat || argv.dF) || 'dd-mm-yyyy', // mm-dd-yyyy
+    sources: [
+        'http://www.vg.no/rss/feed/?categories=1068&keywords=&limit=10&format=rss',
+        'http://www.aftenposten.no/rss/',
+        'http://rss.nytimes.com/services/xml/rss/nyt/InternationalHome.xml',
+        'http://www.dagbladet.no/rss/nyheter/',
+        'http://feeds.reuters.com/reuters/topNews'
+    ]
+};
+
+// TODO: create a RSS XML feed validator
+if (argv.sources || argv.s) {
+    Array.prototype.push.apply(config.sources, argv.sources.split(','));
+}
+
+module.exports = config;

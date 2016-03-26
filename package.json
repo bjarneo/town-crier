@@ -1,7 +1,7 @@
 {
   "name": "news-cli",
   "version": "1.0.0",
-  "description": "News in your CLI",
+  "description": "Aggregated news displayed in your command line",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,6 +12,8 @@
     "array-spread": "^1.0.2",
     "chalk": "^1.1.1",
     "memory-cache": "^0.1.4",
+    "meow": "^3.7.0",
+    "minimist": "^1.2.0",
     "request": "^2.69.0",
     "striptags": "^2.1.1",
     "xml2js": "^0.4.16"
