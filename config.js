@@ -28,10 +28,9 @@ const config = {
     dateFormat: (argv.dateFormat || argv.dF) || 'dd-mm-yyyy', // mm-dd-yyyy
     sources: [
         'http://www.vg.no/rss/feed/?categories=1068&keywords=&limit=10&format=rss',
-        'http://www.aftenposten.no/rss/',
         'http://rss.nytimes.com/services/xml/rss/nyt/InternationalHome.xml',
-        'http://www.dagbladet.no/rss/nyheter/',
-        'http://feeds.reuters.com/reuters/topNews'
+        'http://feeds.reuters.com/reuters/topNews',
+        'http://www.theguardian.com/world/rss'
     ]
 };
 
