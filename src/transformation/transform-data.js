@@ -1,12 +1,16 @@
 'use strict';
 
 const cache = require('memory-cache');
+const stripTags = require('striptags');
 
 function createItemObject(item, channel) {
+
+
+
     return {
         provider: channel.title,
-        title: item.title,
-        description: item.description,
+        title: stripTags(item.title.toString()),
+        description: stripTags(item.description.toString()),
         link: item.link,
         date: item.pubDate
     };
@@ -34,4 +38,4 @@ module.exports = function transformData(provider) {
     }
 
     return items.map(item => createItemObject(item, channel));
-}
+};
