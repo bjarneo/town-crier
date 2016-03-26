@@ -7,7 +7,7 @@ function createItemObject(item, channel) {
     return {
         provider: channel.title,
         title: stripTags(item.title.toString()),
-        description: stripTags(item.description.toString()),
+        description: stripTags(item.description.toString()).substr(0, 155) + '\u2026',
         link: item.link,
         date: item.pubDate
     };
