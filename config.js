@@ -25,7 +25,7 @@ if (argv.help) {
 
 const config = {
     interval: ((argv.interval || argv.i) || 60) * 1000, // 60 seconds,
-    dateFormat: (argv.dateFormat || argv.dF) || 'dd-mm-yyyy', // mm-dd-yyyy
+    dateFormat: (argv.dateFormat || argv.dF) || 'dd-mm-yyyy', // mm-dd-yyyy | yyyy-mm-dd
     sources: [
         'http://www.vg.no/rss/feed/?categories=1068&keywords=&limit=10&format=rss',
         'http://rss.nytimes.com/services/xml/rss/nyt/InternationalHome.xml',

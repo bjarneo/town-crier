@@ -11,6 +11,10 @@ module.exports = function transformDate(date) {
         dateFormat = zeroPad(date.getMonth()) +
             '-' + zeroPad(date.getDate()) +
             '-' + date.getFullYear();
+    } else if (config.dateFormat === 'yyyy-mm-dd') {
+        dateFormat = date.getFullYear() +
+            '-' + zeroPad(date.getMonth()) +
+            '-' + zeroPad(date.getDate());
     } else {
         dateFormat = zeroPad(date.getDate()) +
             '-' + zeroPad(date.getMonth()) +
