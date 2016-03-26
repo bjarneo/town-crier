@@ -9,14 +9,14 @@ if (argv.help) {
           $ town-crier <input>
 
         Options
-             ,  --help           Help
-          -i ,  --interval       interval in seconds
-          -dF,  --dateFormat     how you'd like your date format
-          -s ,  --sources        comma separated list of rss sources
+          --help           Help
+          --interval       Interval in seconds
+          --dateFormat     How you'd like your date format
+          --sources        Comma separated list of rss sources
 
         Examples
-          $ town-crier --interval 60
-          $ town-crier --dateFormat mm-dd-yyyy
+          $ town-crier --interval=60
+          $ town-crier --dateFormat=mm-dd-yyyy
           $ town-crier --sources=http://www.vg.no/rss/feed/,http://www.aftenposten.no/rss/
     `);
 
@@ -24,8 +24,8 @@ if (argv.help) {
 }
 
 const config = {
-    interval: ((argv.interval || argv.i) || 60) * 1000, // 60 seconds,
-    dateFormat: (argv.dateFormat || argv.dF) || 'dd-mm-yyyy', // mm-dd-yyyy | yyyy-mm-dd
+    interval: (argv.interval || 60) * 1000, // 60 seconds,
+    dateFormat: argv.dateFormat || 'dd-mm-yyyy', // mm-dd-yyyy | yyyy-mm-dd
     sources: [
         'http://www.vg.no/rss/feed/?categories=1068&keywords=&limit=10&format=rss',
         'http://rss.nytimes.com/services/xml/rss/nyt/InternationalHome.xml',
