@@ -4,6 +4,7 @@ const fs = require('fs');
 const inquirer = require('inquirer');
 const config = require('./src/configurator');
 const run = require('./src/runner');
+const rssValidator = require('./src/validator/rss');
 
 const feeds = [];
 const customRssFeed = [];
@@ -36,6 +37,10 @@ function updateInterval(interval) {
 }
 
 function updateConfig(items) {
+    if (!config.build) {
+        config.build = true;
+    }
+
     updateSources(items.sources);
 
     updateInterval(items.interval);
@@ -78,28 +83,32 @@ function customFeeds(cb) {
 }
 
 // TODO: All interaction should be in the configurator
-inquirer.prompt([
-    {
-        type: 'input',
-        name: 'interval',
-        message: 'What interval in seconds do you wish to fetch RSS data?',
-        default: () => {
-            return 30;
-        },
-        validate: interval => {
-            interval = parseInt(interval, 10);
+if (config.build) {
+    run();
+} else {
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'interval',
+            message: 'What interval in seconds do you wish to fetch RSS data?',
+            default: () => {
+                return 30;
+            },
+            validate: interval => {
+                interval = parseInt(interval, 10);
 
-            if (interval < 30) {
-                return 'Interval need to be greater than equal 30 seconds';
+                if (interval < 30) {
+                    return 'Interval need to be greater than equal 30 seconds';
+                }
+
+                return true;
             }
-
-            return true;
+        },
+        {
+            type: 'checkbox',
+            message: 'Select RSS feed(s)',
+            name: 'sources',
+            choices: feeds
         }
-    },
-    {
-        type: 'checkbox',
-        message: 'Select RSS feed(s)',
-        name: 'sources',
-        choices: feeds
-    }
-], updateConfig);
+    ], updateConfig);
+}
