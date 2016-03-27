@@ -7,10 +7,6 @@ const sortByDate = require('./sort/sort-by-date');
 const write = require('./write');
 const config = require('./configurator');
 
-function timeout() {
-    setTimeout(runner, config.interval);
-}
-
 function handleData(providers) {
     providers = providers.map(transformData);
 
@@ -21,14 +17,14 @@ function handleData(providers) {
 
     providers.forEach(write);
 
-    timeout();
+    return true;
 }
 
 function runner() {
     fetch(config.sources)
         .then(handleData)
+        .then(() => setTimeout(runner, config.interval))
         .catch(console.error)
-        .then(timeout);
 }
 
 module.exports = runner;
