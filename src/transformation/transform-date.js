@@ -1,7 +1,7 @@
 'use strict';
 
 const zeroPad = require('../zero-pad');
-const config = require('../../config');
+const config = require('../configurator');
 
 module.exports = function transformDate(date) {
     date = new Date(date);

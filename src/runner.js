@@ -5,7 +5,7 @@ const fetch = require('./fetch');
 const transformData = require('./transformation/transform-data');
 const sortByDate = require('./sort/sort-by-date');
 const write = require('./write');
-const config = require('../config');
+const config = require('./configurator');
 
 function timeout() {
     setTimeout(runner, config.interval);
