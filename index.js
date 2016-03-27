@@ -41,7 +41,7 @@ function updateConfig(items) {
     updateInterval(items.interval);
 
     customFeeds(function(customSources) {
-        updateSources(customSources);
+        updateSources(customSources, true);
 
         var data = 'module.exports = ' + JSON.stringify(config);
 
@@ -65,7 +65,9 @@ function customFeeds(cb) {
             default: true
         }
     ], answers => {
-        customRssFeed.push(answers.customRss);
+        if (answers.customRss.length) {
+            customRssFeed.push(answers.customRss);
+        }
 
         if (answers.askAgain) {
             customFeeds();
