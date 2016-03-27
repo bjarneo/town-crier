@@ -36,7 +36,7 @@ const config = {
 };
 
 // TODO: create a RSS XML feed validator
-if (argv.sources || argv.s) {
+if (argv.sources) {
     Array.prototype.push.apply(config.sources, argv.sources.split(','));
 }
 
