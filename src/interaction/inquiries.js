@@ -3,7 +3,6 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
 const register = require('hoki').register;
-const unregister = require('hoki').unregister;
 const dispatch = require('hoki').dispatch;
 const observer = require('hoki').observer;
 
