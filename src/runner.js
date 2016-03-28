@@ -5,7 +5,7 @@ const fetch = require('./fetch');
 const transformData = require('./transformation/transform-data');
 const sortByDate = require('./sort/sort-by-date');
 const write = require('./write');
-const config = require('./configurator');
+const config = require('../config');
 
 function handleData(providers) {
     providers = providers.map(transformData);
