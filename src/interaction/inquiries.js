@@ -103,13 +103,7 @@ function inquiries(config) {
     function writeConfig() {
         var data = 'module.exports = ' + JSON.stringify(config);
 
-        fs.writeFile('config.js', data, 'utf-8', err => {
-            if (err) {
-                throw new Error(err);
-            }
-
-            dispatch('config:finish');
-        });
+        fs.writeFile('config.js', data, 'utf-8', err => dispatch('config:finish', err));
     }
 
     function updateCustomFeed(answers) {
