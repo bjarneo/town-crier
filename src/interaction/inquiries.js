@@ -18,7 +18,7 @@ function inquiries(config) {
         });
     });
 
-    register(['config:start', 'config:before:finish', 'config:finish']);
+    register(['config:before:finish', 'config:finish']);
 
     const questions = [{
         type: 'input',
@@ -130,14 +130,14 @@ function inquiries(config) {
         inquirer.prompt(customRssQuestions, updateCustomFeed);
     }
 
-    function initialConfig(cb) {
+    function init(cb) {
         inquirer.prompt(questions, updateConfig);
 
         observer('config:finish', cb);
     }
 
     return {
-        init: initialConfig
+        init: init
     };
 }
 
