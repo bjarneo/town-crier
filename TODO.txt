@@ -1,1 +1,0 @@
-sort items from the rss feed by date
