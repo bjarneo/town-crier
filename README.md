@@ -12,7 +12,7 @@ $ npm install -g town-crier
 
 Usage
 ------
-![town-crier](http://i.imgur.com/4G0V429.gifv)
+![town-crier](http://i.imgur.com/4G0V429.gif)
 
 ```bash
 $ town-crier
