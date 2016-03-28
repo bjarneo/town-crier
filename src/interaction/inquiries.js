@@ -100,12 +100,6 @@ function inquiries(config) {
         }
     }
 
-    function writeConfig() {
-        var data = 'module.exports = ' + JSON.stringify(config);
-
-        fs.writeFile('config.js', data, 'utf-8', err => dispatch('config:finish', err));
-    }
-
     function updateCustomFeed(answers) {
         if (answers.customRss.length) {
             customRssFeed.push(answers.customRss);
@@ -118,6 +112,12 @@ function inquiries(config) {
 
             dispatch('config:before:finish');
         }
+    }
+
+    function writeConfig() {
+        var data = 'module.exports = ' + JSON.stringify(config);
+
+        fs.writeFile('config.js', data, 'utf-8', err => dispatch('config:finish', err));
     }
 
     function customFeeds() {
