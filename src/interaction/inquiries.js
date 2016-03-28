@@ -6,6 +6,7 @@ const register = require('hoki').register;
 const dispatch = require('hoki').dispatch;
 const observer = require('hoki').observer;
 
+// TODO: Refactor
 function inquiries(config) {
     const feeds = [];
     const customRssFeed = [];
