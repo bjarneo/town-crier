@@ -1,6 +1,6 @@
 {
   "name": "news-cli",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Aggregated news displayed in your command line",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,24 @@
   "bin": {
     "town-crier": "./bin/town-crier"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bjarneo/town-crier.git"
+  },
+  "homepage": "https://github.com/bjarneo/town-crier",
+  "bugs": {
+    "url": "https://github.com/bjarneo/town-crier/issues"
+  },
+  "keywords": [
+    "rss",
+    "reader",
+    "aggregator",
+    "aggregated",
+    "news",
+    "xml",
+    "cli",
+    "custom"
+  ],
   "author": "Bjarne Oeverli",
   "license": "MIT",
   "dependencies": {
