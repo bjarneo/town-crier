@@ -6,6 +6,12 @@ const argv = require('minimist')(process.argv.slice(2));
 function configurator(config, cb) {
     const inquiries = require('./interaction/inquiries')(config);
 
+    if (!config.build || argv.reset) {
+        inquiries.init(cb);
+
+        return;
+    }
+
     if (argv.help) {
         meow(`
             Usage
@@ -41,11 +47,7 @@ function configurator(config, cb) {
         config.dateFormat = argv.dateFormat;
     }
 
-    if (!config.build || argv.reset) {
-        inquiries.init(cb);
-    } else {
-        cb();
-    }
+    cb();
 }
 
 module.exports = configurator;
