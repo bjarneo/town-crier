@@ -6,7 +6,7 @@ const argv = require('minimist')(process.argv.slice(2));
 function configurator(config, cb) {
     const inquiries = require('./interaction/inquiries')(config);
 
-    if (!config.build || argv.reset) {
+    if (!argv.help && (!config.build || argv.reset)) {
         inquiries.init(cb);
 
         return;
@@ -31,7 +31,7 @@ function configurator(config, cb) {
               $ town-crier --reset
         `);
 
-        process.exit(-1);
+        process.exit(1);
     }
 
     // TODO: create a RSS XML feed validator
