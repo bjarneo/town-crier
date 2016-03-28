@@ -1,7 +1,7 @@
 {
   "name": "news-cli",
   "version": "0.0.1",
-  "description": "Aggregated news displayed in your command line",
+  "description": "Add multiple RSS feeds or choose from the default ones and get news directly to your command line",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
