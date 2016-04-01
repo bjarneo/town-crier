@@ -33,7 +33,7 @@
   "dependencies": {
     "array-spread": "^1.0.2",
     "chalk": "^1.1.1",
-    "hoki": "^1.2.3",
+    "hoki": "2.0.0",
     "inquirer": "^0.12.0",
     "memory-cache": "^0.1.4",
     "meow": "^3.7.0",
