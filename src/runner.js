@@ -28,4 +28,3 @@ function runner() {
 }
 
 module.exports = runner;
-
