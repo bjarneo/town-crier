@@ -1,6 +1,6 @@
 {
   "name": "town-crier",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Add multiple RSS feeds or choose from the default ones and get news directly to your command line",
   "main": "index.js",
   "scripts": {
