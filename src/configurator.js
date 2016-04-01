@@ -7,7 +7,7 @@ function configurator(config, cb) {
     const inquiries = require('./interaction/inquiries')(config);
 
     if (!argv.help && (!config.build || argv.reset)) {
-        inquiries.init(cb);
+        inquiries.initialize(cb);
 
         return;
     }

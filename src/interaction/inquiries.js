@@ -159,7 +159,7 @@ function inquiries(config) {
     }
 
     return {
-        init: initialize
+        initialize: initialize
     };
 }
 
