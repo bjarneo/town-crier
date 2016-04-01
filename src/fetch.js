@@ -20,7 +20,7 @@ function promisify(source) {
 
                  resolve(res);
             });
-        });
+        }).end();
     }
 
     return new Promise(resolver);
