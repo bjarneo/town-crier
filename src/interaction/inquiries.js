@@ -23,7 +23,6 @@ function inquiries(config) {
         'config:items:sources',
         'config:items:interval',
         'config:items:customSources',
-        'config:items:customSources:after',
         'config:finish:before',
         'config:finish'
     ]);
