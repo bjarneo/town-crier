@@ -3,13 +3,13 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
 const register = require('hoki').register;
-const dispatch = require('hoki').dispatch;
-const observer = require('hoki').observer;
+const dispatch = require('hoki').dispatcher;
+const observe = require('hoki').observer;
 
 // TODO: Refactor
 function inquiries(config) {
     const feeds = [];
-    const customRssFeed = [];
+    const customSources = [];
     const sources = config.initialSources || config.sources;
 
     sources.forEach((source) => {
@@ -18,9 +18,17 @@ function inquiries(config) {
         });
     });
 
-    register(['config:before:finish', 'config:finish']);
+    register([
+        'config:initialize',
+        'config:items:sources',
+        'config:items:interval',
+        'config:items:customSources',
+        'config:items:customSources:after',
+        'config:finish:before',
+        'config:finish'
+    ]);
 
-    const questions = [{
+    const initialQuestions = [{
         type: 'input',
         name: 'interval',
         message: 'What interval in seconds do you wish to fetch RSS data?',
@@ -46,12 +54,12 @@ function inquiries(config) {
         choices: feeds
     }, {
         type: 'confirm',
-        name: 'customRssFeeds',
+        name: 'customSources',
         message: 'Do you want to enter custom RSS feed(s)?',
         default: true,
     }];
 
-    const customRssQuestions = [{
+    const customSourcesQuestions = [{
         type: 'input',
         name: 'customRss',
         message: 'Add custom RSS feed (url):'
@@ -61,6 +69,52 @@ function inquiries(config) {
         message: 'Want to enter another RSS feed?',
         default: true
     }];
+
+    function initialize(cb) {
+        // update sources
+        observe('config:items:sources', updateSources);
+
+        // update poll interval
+        observe('config:items:interval', updateInterval);
+
+        // run custom sources
+        observe('config:items:customSources', () => inquirer.prompt(
+            customSourcesQuestions,
+            updateCustomSources
+        ));
+
+        // write the new config before we finish the configuration
+        observe('config:finish:before', writeConfig);
+
+        // kick start the inquiries
+        observe('config:initialize', () => inquirer.prompt(initialQuestions, handleAnswers));
+
+        // run the callback when finished to start the application
+        observe('config:finish', cb);
+
+        // initialize, yo
+        dispatch('config:initialize');
+    }
+
+    function handleAnswers(items) {
+        if (!config.build) {
+            config.build = true;
+        }
+
+        if (items.sources) {
+            dispatch('config:items:sources', items.sources);
+        }
+
+        if (items.interval) {
+            dispatch('config:items:interval', items.interval);
+        }
+
+        if (items.customSources) {
+            dispatch('config:items:customSources');
+        } else {
+            dispatch('config:finish:before');
+        }
+    }
 
     function updateSources(sources, append) {
         if (!config.initialSources) {
@@ -82,35 +136,17 @@ function inquiries(config) {
         config.interval = interval;
     }
 
-    function updateConfig(items) {
-        if (!config.build) {
-            config.build = true;
-        }
-
-        observer('config:before:finish', writeConfig);
-
-        updateSources(items.sources);
-
-        updateInterval(items.interval);
-
-        if (items.customRssFeeds) {
-            customFeeds();
-        } else {
-            dispatch('config:before:finish');
-        }
-    }
-
-    function updateCustomFeed(answers) {
+    function updateCustomSources(answers) {
         if (answers.customRss.length) {
-            customRssFeed.push(answers.customRss);
+            customSources.push(answers.customRss);
         }
 
         if (answers.askAgain) {
-            customFeeds();
+            customSources();
         } else {
-            updateSources(customRssFeed, true);
+            updateSources(customSources, true);
 
-            dispatch('config:before:finish');
+            dispatch('config:finish:before');
         }
     }
 
@@ -120,18 +156,8 @@ function inquiries(config) {
         fs.writeFile('config.js', data, 'utf-8', err => dispatch('config:finish', err));
     }
 
-    function customFeeds() {
-        inquirer.prompt(customRssQuestions, updateCustomFeed);
-    }
-
-    function init(cb) {
-        inquirer.prompt(questions, updateConfig);
-
-        observer('config:finish', cb);
-    }
-
     return {
-        init: init
+        init: initialize
     };
 }
 
