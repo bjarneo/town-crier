@@ -1,28 +1,36 @@
 'use strict';
 
 const spread = require('array-spread');
+const parse = require('xml2js').parseString;
 const fetch = require('./fetch');
 const transformData = require('./transformation/transform-data');
 const sortByDate = require('./sort/sort-by-date');
 const write = require('./write');
 const config = require('../config');
 
-function handleData(providers) {
-    providers = providers.map(transformData);
+function toJSON(resolvedPromises) {
+    const jsonFeeds = [];
 
-    // Same as ...providers (ES6)
-    providers = spread(providers);
+    resolvedPromises.forEach(res => {
+        parse(res.body, (err, json) => {
+            if (err) {
+                throw new Error(err);
+            }
 
-    providers = providers.sort(sortByDate);
+            jsonFeeds.push(json);
+        });
+    });
 
-    providers.forEach(write);
-
-    return true;
+    return jsonFeeds;
 }
 
 function runner() {
     fetch(config.sources)
-        .then(handleData)
+        .then(toJSON)
+        .then(jsonFeeds => jsonFeeds.map(transformData))
+        .then(data => spread(data))
+        .then(data => data.sort(sortByDate))
+        .then(data => data.forEach(write))
         .then(() => setTimeout(runner, config.interval))
         .catch(console.error)
 }
