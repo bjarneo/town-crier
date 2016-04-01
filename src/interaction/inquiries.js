@@ -153,7 +153,7 @@ function inquiries(config) {
 
     // Won't work if it's installed globally.
     function writeConfig() {
-        var data = 'module.exports = ' + JSON.stringify(config);
+        const data = 'module.exports = ' + JSON.stringify(config);
 
         fs.writeFile('config.js', data, 'utf-8', err => dispatch('config:finish', err));
     }
