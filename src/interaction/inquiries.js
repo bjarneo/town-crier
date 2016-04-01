@@ -78,10 +78,7 @@ function inquiries(config) {
         observe('config:items:interval', updateInterval);
 
         // run custom sources
-        observe('config:items:customSources', () => inquirer.prompt(
-            customSourcesQuestions,
-            updateCustomSources
-        ));
+        observe('config:items:customSources', runCustomSourcesPrompt);
 
         // write the new config before we finish the configuration
         observe('config:finish:before', writeConfig);
@@ -142,7 +139,7 @@ function inquiries(config) {
         }
 
         if (answers.askAgain) {
-            customSources();
+            runCustomSourcesPrompt();
         } else {
             updateSources(customSources, true);
 
@@ -150,6 +147,11 @@ function inquiries(config) {
         }
     }
 
+    function runCustomSourcesPrompt() {
+        inquirer.prompt(customSourcesQuestions, updateCustomSources);
+    }
+
+    // Won't work if it's installed globally.
     function writeConfig() {
         var data = 'module.exports = ' + JSON.stringify(config);
 
