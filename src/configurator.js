@@ -3,7 +3,7 @@
 const meow = require('meow');
 
 function configurator(config, cb) {
-    const inquiries = require('./interaction/inquiries')(config);
+    const inquiry = require('./interaction/inquiry')(config);
 
     const cli = meow(`
         Usage
@@ -24,7 +24,7 @@ function configurator(config, cb) {
     `);
 
     if (!cli.flags.help && (!config.build || cli.flags.reset)) {
-        inquiries.initialize(cb);
+        inquiry.initialize(cb);
 
         return;
     }
