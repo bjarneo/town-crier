@@ -23,14 +23,14 @@ function configurator(config, cb) {
           $ town-crier --reset
     `);
 
-    if (!cli.flags.help && (!config.build || cli.flags.reset)) {
+    if (cli.flags.help) {
+        process.exit(1);
+    }
+
+    if (!config.build || cli.flags.reset) {
         inquiry.initialize(cb);
 
         return;
-    }
-
-    if (cli.flags.help) {
-        process.exit(1);
     }
 
     // TODO: create a RSS XML feed validator
