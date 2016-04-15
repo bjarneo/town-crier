@@ -1,6 +1,6 @@
 'use strict';
 
-const zeroPad = require('../zero-pad');
+const zeroPad = require('zero-pad');
 const config = require('../../config');
 
 module.exports = function transformDate(date) {
