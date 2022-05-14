@@ -32,10 +32,10 @@
   "license": "MIT",
   "dependencies": {
     "array-spread": "^1.0.2",
-    "chalk": "^1.1.1",
+    "chalk": "^2.0.0",
     "got": "^6.2.0",
     "hoki": "2.0.0",
-    "inquirer": "^0.12.0",
+    "inquirer": "^6.5.1",
     "memory-cache": "^0.1.4",
     "meow": "^3.7.0",
     "striptags": "^2.1.1",
